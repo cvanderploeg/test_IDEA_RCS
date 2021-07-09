@@ -25,20 +25,7 @@ namespace test_IDEA_RCS
             // start a new open model
             OpenModel openModel = new OpenModel();
 
-            AddProjectData(openModel);
-            ReinforcedCrossSection rcs = CreateReinforcedCrossSection(openModel);
-            CheckMember checkMember = CheckMemberSettings(openModel);
 
-            Console.WriteLine("start calculation");
-
-            CalculateSections(openModel, rcs, checkMember);
-
-            Console.WriteLine("finished");
-
-        }
-
-        static void AddProjectData(OpenModel openModel)
-        {
             //Common project data
             var projectData = new ProjectData();
             projectData.Name = "Column project";
@@ -57,10 +44,7 @@ namespace test_IDEA_RCS
             projectDataConcrete.CodeEN1992_2 = false;
             projectDataConcrete.CodeEN1992_3 = false;
             openModel.ProjectDataConcrete = projectDataConcrete;
-        }
 
-        static ReinforcedCrossSection CreateReinforcedCrossSection(OpenModel openModel)
-        {
             //Concrete material
             MatConcreteEc2 mat = new MatConcreteEc2();
             mat.Name = "C30/37";
@@ -244,11 +228,8 @@ namespace test_IDEA_RCS
             stirrup.Geometry = poly;
             rcs.Stirrups.Add(stirrup);
 
-            return rcs;
-        }
 
-        static CheckMember CheckMemberSettings(OpenModel openModel)
-        { 
+
             var checkMember = new CheckMember1D(); //Design member data object
             openModel.AddObject(checkMember);
 
@@ -317,17 +298,18 @@ namespace test_IDEA_RCS
             setup.Annex = NationalAnnexCode.NoAnnex;
             openModel.ConcreteSetup = setup;
 
-            return checkMember;
-        }
 
-        static void CalculateSections(OpenModel openModel, ReinforcedCrossSection rcs, CheckMember checkMember)
-        {
+
+
+            Console.WriteLine("start calculation");
+
+
             //Standard section
             var singleCheckSection = new StandardCheckSection();
             singleCheckSection.Description = "S 1";
             singleCheckSection.ReinfSection = new ReferenceElement(rcs);
             singleCheckSection.CheckMember = new ReferenceElement(checkMember);
-            
+
 
             //add extreme to section
             var sectionExtreme = new StandardCheckSectionExtreme();
@@ -417,6 +399,9 @@ namespace test_IDEA_RCS
             }
 
             rcsController.Dispose();
+
+            Console.WriteLine("finished");
+
         }
     }
 }
