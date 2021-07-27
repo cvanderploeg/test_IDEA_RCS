@@ -20,11 +20,10 @@ namespace test_IDEA_RCS
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("start creating model");
+            Console.WriteLine("start creating model");                      
 
             // start a new open model
             OpenModel openModel = new OpenModel();
-
 
             //Common project data
             var projectData = new ProjectData();
@@ -228,8 +227,6 @@ namespace test_IDEA_RCS
             stirrup.Geometry = poly;
             rcs.Stirrups.Add(stirrup);
 
-
-
             var checkMember = new CheckMember1D(); //Design member data object
             openModel.AddObject(checkMember);
 
@@ -298,18 +295,13 @@ namespace test_IDEA_RCS
             setup.Annex = NationalAnnexCode.NoAnnex;
             openModel.ConcreteSetup = setup;
 
-
-
-
             Console.WriteLine("start calculation");
-
 
             //Standard section
             var singleCheckSection = new StandardCheckSection();
             singleCheckSection.Description = "S 1";
             singleCheckSection.ReinfSection = new ReferenceElement(rcs);
             singleCheckSection.CheckMember = new ReferenceElement(checkMember);
-
 
             //add extreme to section
             var sectionExtreme = new StandardCheckSectionExtreme();
@@ -321,7 +313,6 @@ namespace test_IDEA_RCS
 
             openModel.AddObject(singleCheckSection);
 
-
             //Creating instance of Rcs controller
             var rcsController = new IdeaStatiCa.RcsController.IdeaRcsController();
             System.Diagnostics.Debug.Assert(rcsController != null);
@@ -332,8 +323,10 @@ namespace test_IDEA_RCS
             var ok = rcsController.OpenIdeaProjectFromIdeaOpenModel(openModel, "Column", out messages);
             System.Diagnostics.Debug.Assert(ok);
 
-            string fileName = @"C:\Users\c.vd.ploeg\Desktop\idea\test.idea";
+            //string fileName = @"C:\Users\c.vd.ploeg\Desktop\idea\test.idea";
+            string fileName = @"C:\Users\r.ajouz\Desktop\test.ideaRcs";
             rcsController.SaveAsIdeaProjectFile(fileName);
+            
 
             //Calculate project
             ok = rcsController.Calculate(new List<int>() { singleCheckSection.Id });
@@ -344,11 +337,12 @@ namespace test_IDEA_RCS
             System.Diagnostics.Debug.Assert(result != null);
 
             // Storing to standard xml file
+            string fileNameXML = @"C:\Users\r.ajouz\Desktop\testresults.xml";
             XmlSerializer xs = new XmlSerializer(typeof(List<IdeaRS.OpenModel.Concrete.CheckResult.SectionConcreteCheckResult>));
-
-            Stream fs = new FileStream(fileName, FileMode.Create);
+            Stream fs = new FileStream(fileNameXML, FileMode.Create);
             XmlTextWriter writer = new XmlTextWriter(fs, Encoding.Unicode);
             writer.Formatting = Formatting.Indented;
+
             // Serialize using the XmlTextWriter.
             xs.Serialize(writer, result);
             writer.Close();

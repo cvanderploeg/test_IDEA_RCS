@@ -17,7 +17,7 @@
     </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -65,9 +65,9 @@
     <Reference Include="IdeaStatiCa.Plugin, Version=21.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IdeaStatiCa.Plugin.21.0.2.289\lib\net48\IdeaStatiCa.Plugin.dll</HintPath>
     </Reference>
-    <Reference Include="IdeaStatiCa.RcsController, Version=20.0.77.57142, Culture=neutral, PublicKeyToken=b195254c3273d5c1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Program Files\IDEA StatiCa\StatiCa 21.0\IdeaStatiCa.RcsController.dll</HintPath>
+    <Reference Include="IdeaStatiCa.RcsController">
+      <HintPath>..\..\..\..\..\..\Program Files\IDEA StatiCa\StatiCa 21.0\IdeaStatiCa.RcsController.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -122,10 +122,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="grpc_csharp_ext.x64.dll" />
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
+    <Content Include="grpc_csharp_ext.x64.dll" />
+    <Content Include="grpc_csharp_ext.x86.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Grpc.Core.2.35.0\build\net45\Grpc.Core.targets" Condition="Exists('..\packages\Grpc.Core.2.35.0\build\net45\Grpc.Core.targets')" />
